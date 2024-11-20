@@ -1,0 +1,15 @@
+{
+  "name": "paytm-clone",
+  "version": "1.0.0",
+  "description": "paytm-clone ffrom hkirat cohort 2.0 (week 8)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "paytm",
+    "javascript"
+  ],
+  "author": "Riaz Islam",
+  "license": "ISC"
+}
