@@ -3,6 +3,7 @@ import { DB_NAME } from "./constants.js";
 import express from "express";
 import connectDB from "./db/index.js";
 import dotenv from "dotenv"
+import { app } from "./app.js";
 
 dotenv.config(
     {
@@ -19,7 +20,7 @@ connectDB()
         throw error
     })
     app.listen(process.env.PORT,()=>{
-        console.log(`app is listening on port ${process.env.PORT}`)})
+        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);})
 })
 
 
