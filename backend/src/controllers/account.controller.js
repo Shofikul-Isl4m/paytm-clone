@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-const express = require("express");
-import { verifyJWT } from "../middlewares/auth.middleware.js";
+
+
 import { Account } from "../models/account.model.js";
 const mongoose = require("mongoose");
 
@@ -56,11 +56,11 @@ const transfer =  asyncHandler( async (req, res) => {
   }
 
   // Perform the transfer within transaction
-  await Account.updateOne(
+   const user = await Account.updateOne(
     { userId: req.userId },
     { $inc: { balance: -amount } }
   ).session(session);
-  await Account.updateOne(
+  const toaccount = await Account.updateOne(
     { userId: to },
     { $inc: { balance: amount } }
   ).session(session);
@@ -71,6 +71,15 @@ const transfer =  asyncHandler( async (req, res) => {
   res.json({
     message: "Transfer successful",
   });
+  return res
+  .status(200)
+  .json(new ApiResponse(
+      200,
+     {
+      user,toaccount
+    },
+      "Transfer successful"
+  ))
 });
 
 
