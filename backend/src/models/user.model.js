@@ -29,9 +29,9 @@ const userSchema = new Schema({
       trim: true,
       maxLength: 50,
     },
-    refresshToken : {
-      type : true
-    }
+    refreshToken: {
+      type: String
+  }
    
   }
 ,{
