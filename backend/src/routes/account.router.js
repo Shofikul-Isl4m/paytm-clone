@@ -1,10 +1,9 @@
 import {Router} from "express"
-import { verifyJWT } from "../middlewares/auth.middleware";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { balance,
          transfer,
-         
+         } from "../controllers/account.controller.js";
 
- } from "../controllers/account.controller";
 
 
 const router = Router();

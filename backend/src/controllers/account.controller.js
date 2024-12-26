@@ -1,9 +1,9 @@
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asynHandler.js";
 
 
 
 import { Account } from "../models/account.model.js";
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 
 
