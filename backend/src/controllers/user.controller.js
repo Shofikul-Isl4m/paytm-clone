@@ -10,9 +10,6 @@ import mongoose from "mongoose";
 
 
 
-
-
-
 const generateAccessAndRefereshTokens = async(userId) =>{
   try {
       const user = await User.findById(userId)
@@ -53,8 +50,9 @@ const registerUser = asyncHandler( async (req, res) => {
   }
 
   const existedUser = await User.findOne({
-      $or: [{ username }]
-  })
+    $or: [{ username }, { fullName }]
+  });
+  
 
   if (existedUser) {
       throw new ApiError(409, "User with email or username already exists")
@@ -76,7 +74,7 @@ const registerUser = asyncHandler( async (req, res) => {
   if (!createdUser) {
       throw new ApiError(500, "Something went wrong while registering the user")
   }
-    const userId = user._id;
+    const userId = createdUser._id;
   
     // ----- Create new account ------
   
@@ -99,15 +97,15 @@ const registerUser = asyncHandler( async (req, res) => {
 
 
 const loginUser = asyncHandler(async (req, res) =>{
-  const {email, username, password} = req.body
-  console.log(email);
+  const { username,fullName, password} = req.body
+  console.log(fullName);
 
-  if (!username && !email) {
+  if (!username && !fullName) {
       throw new ApiError(400, "username or email is required")
   }
 
   const user = await User.findOne({
-    $or: [{username}, {email}]
+    $or: [{username}, {fullName}]
 })
 
 if (!user) {

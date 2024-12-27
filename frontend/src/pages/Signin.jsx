@@ -41,17 +41,17 @@ export const Signin = () => {
             placeholder="Password"
             label={"Password"}
           />
-          <div className="pt-4">
+          <div className="pt-4">  
             <Button
               onClick={async () => {
                 const response = await axios.post(
-                  import.meta.env.VITE_SERVER_URL + "/api/v1/user/signin",
+                  "/api/v1/user/login",
                   {
                     username,
                     password,
                   }
                 );
-                localStorage.setItem("token", response.data.token);
+                
                 navigate("/dashboard");
               }}
               label={"Sign in"}
@@ -60,7 +60,7 @@ export const Signin = () => {
           <BottomWarning
             label={"Don't have an account?"}
             buttonText={"Sign up"}
-            to={"/signup"}
+            to={"/register"}
           />
         </div>
       </div>

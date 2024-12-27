@@ -56,7 +56,7 @@ export const SendMoney = () => {
                     import.meta.env.VITE_SERVER_URL +
                       "/api/v1/account/transfer",
                     {
-                      to: id,
+                      to: id,   
                       amount,
                     },
                     {

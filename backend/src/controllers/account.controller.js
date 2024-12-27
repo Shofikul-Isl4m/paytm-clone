@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asynHandler.js";
 
 
-
+import { User } from "../models/user.model.js";
 import { Account } from "../models/account.model.js";
 import mongoose from "mongoose";
 
@@ -57,7 +57,7 @@ const transfer =  asyncHandler( async (req, res) => {
 
   // Perform the transfer within transaction
    const user = await Account.updateOne(
-    { userId: req.userId },
+    { userId: req.user._id },
     { $inc: { balance: -amount } }
   ).session(session);
   const toaccount = await Account.updateOne(
@@ -68,9 +68,7 @@ const transfer =  asyncHandler( async (req, res) => {
   // Commit Transaction
   await session.commitTransaction();
 
-  res.json({
-    message: "Transfer successful",
-  });
+  
   return res
   .status(200)
   .json(new ApiResponse(
@@ -91,6 +89,8 @@ export  {
 
 
 }
+
+
 
 
 

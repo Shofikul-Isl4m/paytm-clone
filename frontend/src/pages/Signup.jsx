@@ -8,8 +8,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  
+  const [fullName, setfullName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -31,24 +31,18 @@ export const Signup = () => {
           <SubHeading label={"Enter your infromation to create an account"} />
           <InputBox
             onChange={(e) => {
-              setFirstName(e.target.value);
-            }}
-            placeholder="FirstName"
-            label={"First Name"}
-          />
-          <InputBox
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
-            placeholder="LastName"
-            label={"Last Name"}
-          />
-          <InputBox
-            onChange={(e) => {
               setUsername(e.target.value);
             }}
-            placeholder="Email"
-            label={"Email"}
+            placeholder="username"
+            label={"username"}
+          />
+         
+          <InputBox
+            onChange={(e) => {
+              setfullName(e.target.value);
+            }}
+            placeholder="fullname"
+            label={"fullname"}
           />
           <InputBox
             onChange={(e) => {
@@ -58,27 +52,31 @@ export const Signup = () => {
             label={"Password"}
           />
           <div className="pt-4">
-            <Button
-              onClick={async () => {
-                const response = await axios.post(
-                  import.meta.env.VITE_SERVER_URL + "/api/v1/user/signup",
-                  {
-                    username,
-                    firstName,
-                    lastName,
-                    password,
-                  }
-                );
-                localStorage.setItem("token", response.data.token);
-                navigate("/dashboard");
-              }}
-              label={"Sign up"}
-            />
+          <Button
+  onClick={async () => {
+    try {
+      // Send the registration data to the server
+      await axios.post(
+        "/api/v1/users/register",
+        {  username ,  fullName ,  password },
+      
+      );
+      
+      // Navigate the user to the signin page after successful registration
+      navigate("/login");
+    } catch (error) {
+      console.error("Registration failed:", error);
+      alert("Error during registration. Please try again.");
+    }
+  }}
+  label={"Sign up"}
+/>
+
           </div>
           <BottomWarning
             label={"Already have an account?"}
             buttonText={"Sign in"}
-            to={"/signin"}
+            to={"/login"}
           />
         </div>
       </div>

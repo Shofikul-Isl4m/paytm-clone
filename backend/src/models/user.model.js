@@ -17,18 +17,14 @@ const userSchema = new Schema({
       required: [true, 'password is required'],
       minLength: 6,
     },
-    firstName: {
+    fullName: {
       type: String,
       required: true,
       trim: true,
+      minLength: 3,
       maxLength: 50,
     },
-    lastName: {
-      type: String,
-      required: true,
-      trim: true,
-      maxLength: 50,
-    },
+    
     refreshToken: {
       type: String
   }
