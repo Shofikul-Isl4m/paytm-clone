@@ -14,14 +14,7 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userToken = localStorage.getItem("token");
-
-    // Check if token exists in local storage
-    if (userToken) {
-      navigate("/dashboard"); // Redirect to sign-in page if token doesn't exist
-    }
-  }, []);
+ 
 
   return (
     <div className="bg-slate-300 h-screen flex justify-center">
