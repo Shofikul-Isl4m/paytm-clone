@@ -10,7 +10,7 @@ export const Users = () => {
   useEffect(() => {
     axios
       .get(
-        import.meta.env.VITE_SERVER_URL + "/api/v1/user/bulk?filter=" + filter
+        "/api/v1/user/bulk?filter=" + filter
       )
       .then((response) => {
         setUsers(response.data.user);

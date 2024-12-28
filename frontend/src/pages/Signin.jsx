@@ -10,16 +10,35 @@ import axios from "axios";
 export const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null); // To show error messages
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userToken = localStorage.getItem("token");
-
-    // Check if token exists in local storage
-    if (userToken) {
-      navigate("/dashboard"); // Redirect to sign-in page if token doesn't exist
+  const handleSignIn = async () => {
+    // Basic validation
+    if (!username || !password) {
+      setError("Please enter both username and password.");
+      return;
     }
-  }, []);
+
+    setLoading(true); // Start loading
+    setError(null); // Clear previous error
+
+    try {
+      await axios.post("/api/v1/users/login", {
+        username,
+        password,
+      });
+      navigate("/dashboard"); // Navigate to dashboard on success
+    } catch (err) {
+      // Handle errors from the API
+      setError(err.response?.data?.message || "Something went wrong.");
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  };
+
+  
 
   return (
     <div className="bg-slate-300 h-screen flex justify-center">
@@ -31,8 +50,8 @@ export const Signin = () => {
             onChange={(e) => {
               setUsername(e.target.value);
             }}
-            placeholder="Email"
-            label={"Email"}
+            placeholder="username"
+            label={"username"}
           />
           <InputBox
             onChange={(e) => {
@@ -43,17 +62,7 @@ export const Signin = () => {
           />
           <div className="pt-4">  
             <Button
-              onClick={async () => {
-                const response = await axios.post(
-                  "/api/v1/user/login",
-                  {
-                    username,
-                    password,
-                  }
-                );
-                
-                navigate("/dashboard");
-              }}
+              onClick={handleSignIn}
               label={"Sign in"}
             />
           </div>

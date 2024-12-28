@@ -28,6 +28,6 @@ import accountRouter from "./routes/account.router.js"
 
 //routes declaraion
 app.use('/api/v1/users',userRouter);
-app.use('/api/v1/users',accountRouter);
+app.use('/api/v1/account',accountRouter);
 
 export  { app }

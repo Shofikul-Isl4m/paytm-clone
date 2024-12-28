@@ -8,28 +8,36 @@ export const Appbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userToken = localStorage.getItem("token");
-
-    // Check if token exists in local storage
-    if (!userToken) {
-      navigate("/signin"); // Redirect to sign-in page if token doesn't exist
-    } else {
+   
       axios
-        .get(import.meta.env.VITE_SERVER_URL + "/api/v1/user/getUser", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        })
+        .get( "/api/v1/users/current-user",
+         
+        )
         .then((response) => {
           setUser(response.data);
         });
-    }
+    
   }, []);
 
-  const signOutHandler = () => {
-    localStorage.removeItem("token");
-    navigate("/signin");
-  };
+  
+
+const logoutUser = async () => {
+    try {
+        // Call the logout API
+        const response = await axios.get("/api/v1/users/logout", {
+            withCredentials: true, // Ensure cookies are included in the request
+        });
+
+        console.log(response.data.message); // "User logged Out"
+
+        // Redirect the user to the login page or homepage
+        window.location.href = "/login"; // Redirect after logout
+    } catch (error) {
+        console.error("Error logging out:", error.response?.data || error.message);
+        alert("Failed to log out. Please try again.");
+    }
+};
+
 
   return (
     <div className="shadow h-14 flex justify-between items-center md:px-10">
@@ -39,7 +47,7 @@ export const Appbar = () => {
         </div>
       </Link>
       <div className="flex items-center justify-center gap-2">
-        <Button label={"Sign Out"} onClick={signOutHandler} />
+        <Button label={"Sign Out"} onClick={logoutUser} />
         <div className="flex flex-col justify-center h-full mr-4">
           {user?.firstName}
         </div>
