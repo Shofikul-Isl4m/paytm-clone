@@ -10,7 +10,7 @@ export const Appbar = () => {
   useEffect(() => {
     axios.get("/api/v1/users/current-user")
       .then((response) => {
-        setUser(response.data);
+        setUser(response.data.data);
       })
       .catch((error) => {
         console.error("Error fetching current user:", error);
@@ -23,7 +23,7 @@ export const Appbar = () => {
 const logoutUser = async () => {
     try {
         // Call the logout API
-        const response = await axios.get("/api/v1/users/logout", {
+        const response = await axios.post("/api/v1/users/logout", {
             withCredentials: true, // Ensure cookies are included in the request
         });
 

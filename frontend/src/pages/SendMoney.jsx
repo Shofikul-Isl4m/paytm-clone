@@ -5,14 +5,7 @@ import { useEffect, useState } from "react";
 export const SendMoney = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const userToken = localStorage.getItem("token");
-
-    // Check if token exists in local storage
-    if (!userToken) {
-      navigate("/signin"); // Redirect to sign-in page if token doesn't exist
-    }
-  }, []);
+  
 
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
