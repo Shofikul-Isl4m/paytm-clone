@@ -9,6 +9,7 @@ import { balance,
 const router = Router();
 
 router.route("/balance").get(verifyJWT,balance)
-router.route("/transfer").get(verifyJWT,transfer)
+router.route("/transfer").post(verifyJWT,transfer)
+
 
 export default router

@@ -120,10 +120,19 @@ const loginUser = asyncHandler(async (req, res) =>{
  if (!isPasswordValid) {
   throw new ApiError(401, "Invalid user credentials")
   }
+  const userId = user._id;
 
- const {accessToken, refreshToken} = await generateAccessAndRefereshTokens(user._id)
+  // ----- Create new account ------
 
-  const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+  await Account.create({
+    userId,
+    balance: parseInt(Math.random() * 10000),
+  });
+
+
+ const {accessToken, refreshToken} = await generateAccessAndRefereshTokens( userId)
+
+  const loggedInUser = await User.findById(userId).select("-password -refreshToken")
 
   const options = {
       httpOnly: true,
@@ -184,6 +193,39 @@ const logoutUser = asyncHandler(async(req, res) => {
     .json(new ApiResponse(200, {}, "User logged Out"))
 })
 
+const findUser = asyncHandler ( async (req,res) => {
+    const filter = req.query.filter || "";
+
+    const users = await User.find({
+      $or: [
+        {
+          fullName: {
+            $regex: filter,
+            $options: "i"
+          },
+        },
+        {
+          username: {
+            $regex: filter,
+            $options: "i"
+          },
+        },
+      ],
+    });
+  
+    res.json({
+      user: users.map((user) => ({
+        username: user.username,
+        fullName: user.fullName,
+      
+        _id: user._id,
+      })),
+    });
+  }
+
+
+)
+
 
 
 
@@ -194,6 +236,7 @@ export {
   registerUser,
   loginUser,
   getCurrentUser,
-  logoutUser
+  logoutUser,
+  findUser
 
 }

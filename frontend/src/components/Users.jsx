@@ -8,13 +8,21 @@ export const Users = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    axios
-      .get(
-        "/api/v1/user/bulk?filter=" + filter
-      )
-      .then((response) => {
-        setUsers(response.data.user);
-      });
+    
+    try {
+      axios
+        .get(
+          "/api/v1/users/bulk?filter=" + filter
+        )
+        .then((response) => {
+          setUsers(response.data.user);
+        });
+    } catch (error) {
+      console.error("user finding trough bulk failed:", error);
+      alert("Error during bulk. Please try again.");
+
+      
+    }
   }, [filter]);
 
   return (
@@ -46,13 +54,11 @@ function User({ user }) {
     <div className="flex justify-between">
       <div className="flex">
         <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-          <div className="flex flex-col justify-center h-full text-xl">
-            {user.firstName[0].toUpperCase()}
-          </div>
+         
         </div>
         <div className="flex flex-col justify-center h-ful">
           <div>
-            {user.firstName} {user.lastName}
+            {user.fullName} {user.username}
           </div>
         </div>
       </div>
@@ -60,7 +66,7 @@ function User({ user }) {
       <div className="flex flex-col justify-center h-ful">
         <Button
           onClick={(e) => {
-            navigate("/send?id=" + user._id + "&name=" + user.firstName);
+            navigate("/send?id=" + user._id + "&name=" + user.fullName);
           }}
           label={"Send Money"}
         />

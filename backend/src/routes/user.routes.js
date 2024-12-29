@@ -1,5 +1,6 @@
 import {Router} from "express"
 import { 
+    findUser,
     getCurrentUser,
     loginUser,
     logoutUser,
@@ -14,6 +15,7 @@ router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
 router.route("/current-user").get(verifyJWT, getCurrentUser)
 router.route("/logout").post(verifyJWT,logoutUser)
+router.route("/bulk").get(verifyJWT,findUser)
 
 
 export default router

@@ -8,16 +8,15 @@ export const Appbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-   
-      axios
-        .get( "/api/v1/users/current-user",
-         
-        )
-        .then((response) => {
-          setUser(response.data);
-        });
-    
+    axios.get("/api/v1/users/current-user")
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching current user:", error);
+      });
   }, []);
+  
 
   
 
@@ -31,7 +30,7 @@ const logoutUser = async () => {
         console.log(response.data.message); // "User logged Out"
 
         // Redirect the user to the login page or homepage
-        window.location.href = "/login"; // Redirect after logout
+       navigate("/login");// Redirect after logout
     } catch (error) {
         console.error("Error logging out:", error.response?.data || error.message);
         alert("Failed to log out. Please try again.");
@@ -49,11 +48,11 @@ const logoutUser = async () => {
       <div className="flex items-center justify-center gap-2">
         <Button label={"Sign Out"} onClick={logoutUser} />
         <div className="flex flex-col justify-center h-full mr-4">
-          {user?.firstName}
+          {user?.fullName}
         </div>
         <div className="rounded-full h-10 w-10 p-4 bg-slate-200 flex justify-center mr-2">
           <div className="flex flex-col justify-center h-full text-xl">
-            {user?.firstName[0].toUpperCase()}
+            {user?.fullName}
           </div>
         </div>
       </div>

@@ -13,16 +13,20 @@ export const Dashboard = () => {
     
 
     
-      axios
-        .get( "/api/v1/account/balance", 
-          
-        )
-        .then((response) => {
-          setBal(response.data.balance);
-        })
-        .catch((error) => {
-          navigate("/login");
-        });
+      try {
+        axios
+          .get( "/api/v1/account/balance", 
+            
+          )
+          .then((response) => {
+            setBal(response.data.balance);
+          })
+      } catch (error) {
+        console.error("fetching in dashboard usereffect", error);
+      alert("fetching in dashboard usereffect failed");
+        
+      }
+        
     
   }, [navigate]);
 
