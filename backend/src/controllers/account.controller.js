@@ -11,6 +11,10 @@ const balance =  asyncHandler( async (req, res) => {
   const account = await Account.findOne({
     userId: req.user?._id,
   });
+  if (!account) {
+    throw new ApiError(404, "account do not found for balance") 
+  }
+
 
   return res
   .status(200)

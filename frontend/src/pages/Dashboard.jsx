@@ -19,7 +19,7 @@ export const Dashboard = () => {
             
           )
           .then((response) => {
-            setBal(response.data.balance);
+            setBal(response.data.data);
           })
       } catch (error) {
         console.error("fetching in dashboard usereffect", error);
