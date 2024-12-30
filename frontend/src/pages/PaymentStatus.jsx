@@ -7,17 +7,12 @@ export const PaymentStatus = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userToken = localStorage.getItem("token");
-
-    // Check if token exists in local storage
-    if (!userToken) {
-      navigate("/signin"); // Redirect to sign-in page if token doesn't exist
-    } else {
+  
       const t = setTimeout(() => {
         navigate("/dashboard");
-      }, 3000);
+      }, 10000);
       return () => clearTimeout(t);
-    }
+    
   }, []);
 
   return (
@@ -25,7 +20,7 @@ export const PaymentStatus = () => {
       <div className="bg-green-300 md:w-1/4 text-center py-10 px-5 m-4 text-green-900 font-bold text-3xl">
         {message}
         <div className="text-center text-black text-sm font-semibold py-4">
-          Redirecting to Dashboard in 3 seconds.
+          Redirecting to Dashboard in 10 seconds.
         </div>
       </div>
     </div>

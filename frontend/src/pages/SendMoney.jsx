@@ -46,20 +46,15 @@ export const SendMoney = () => {
               <button
                 onClick={async () => {
                   const res = await axios.post(
-                    import.meta.env.VITE_SERVER_URL +
+                 
                       "/api/v1/account/transfer",
                     {
-                      to: id,   
+                      to:id,   
                       amount,
                     },
-                    {
-                      headers: {
-                        Authorization:
-                          "Bearer " + localStorage.getItem("token"),
-                      },
-                    }
+                   
                   );
-                  // console.log(res.data.message);
+                   console.log(res.data.message);
                   navigate("/paymentstatus?message=" + res?.data.message);
                 }}
                 className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white"
